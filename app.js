@@ -6,21 +6,20 @@ axios.get('https://api.vschool.io/tyler-parker/todo')
       console.log(error)
   });
 
-const todoForm = document.todoForm
+const toDoForm = document.toDoForm
 
-todoForm.addEventListener("submit", function (event) {
+toDoForm.addEventListener("submit", function (event) {
   event.preventDefault()
-
   const item =  {
-    title: todoForm.title.value,
-    description: todoForm.description.value,
-    imgUrl: todoForm.imgUrl.value
+    title: toDoForm.title.value,
+    description: toDoForm.description.value,
+    imgUrl: toDoForm.imgUrl.value
   }
-  console.log(todoForm.title.value);
+  console.log(toDoForm.title.value);
     
-   axios.post('https://api.vschool.io/tyler-parker/todo', item)
-        .then(response => console.log(response.data))
-        .catch(error => console.log(error))
+  axios.post('https://api.vschool.io/tyler-parker/todo', item)
+    .then(response => console.log(response.data))
+    .catch(error => console.log(error))
 })
 
 function getListItem(items) {
@@ -31,7 +30,6 @@ function getListItem(items) {
     const img = document.createElement('img')
     const collection = document.getElementById("itemGroup")
     const checkBox = document.createElement('input')
-
 
     title.textContent = data.title
     description.textContent = data.description
@@ -44,25 +42,18 @@ function getListItem(items) {
     collection.appendChild(newItem)
     newItem.append(title, checkBox, description, img)
     title.append(checkBox)
-
-    if (data.completed === true) {
-      title.insertAdjacentHTML("afterbegin", "<label><input type='checkbox' class='filled-in' checked='checked'/><span></span></label>")
-    } else {
-      title.insertAdjacentHTML("afterbegin", "<label><input type='checkbox' class='filled-in' /><span></span></label>")
-    }
-
-  });
+    title.insertAdjacentHTML("afterbegin", "<label><input type='checkbox' class='filled-in' /><span></span></label>")
+    
+    checkBox.addEventListener("change", (e) => {
+      if (checkBox.checked === false) {
+        axios.put("https://api.vschool.io/tyler-parker/todo/" + data._id, {completed: false})
+          .then(response => console.log(response))
+          .catch(error => console.log(error))
+      } else {
+        axios.put("https://api.vschool.io/tyler-parker/todo/" + data._id, {completed: true})
+          .then(response => console.log(response))
+          .catch(error => console.log(error))
+      }
+    })
+});
 }
-
-// const checkBox = document.getElementsByClassName("filled-in")
-// checkBox.addEventListener("change", (e) => {
-//   if (checkBox.checked === false) {
-//   axios.put("https://api.vschool.io/tyler-parker/todo" + data._id, {completed: false})
-//     .then(response => console.log(response))
-//     .catch(error => console.log(error))
-//   } else {
-//   axios.put("https://api.vschool.io/tyler-parker/todo" + data._id, {completed: true})
-//     .then(response => console.log(response))
-//     .catch(error => console.log(error))
-// }
-// })
