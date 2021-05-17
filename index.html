@@ -23,29 +23,30 @@
       <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     </div>
   </nav>
+
   <div id="basic-form" class="section">
     <div class="row">
       <div class="col s12 m12 l6">
         <div class="card-panel">
           <h4 class="header2">Add To Do Item</h4>
           <div class="row">
-            <form class="col s12">
+            <form class="col s12" name="toDoForm">
               <div class="row">
                 <div class="input-field col s12">
-                  <input id="name" type="text">
-                  <label for="first_name">Title</label>
+                  <input id="name" type="text" name="title">
+                  <label for="title" class="active">Title</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <input id="email" type="text">
-                  <label for="email">Description</label>
+                  <input id="description" type="text" name="description">
+                  <label for="description" class="active">Description</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <input id="password" type="url">
-                  <label for="password">Image Link</label>
+                  <input id="imgUrl" type="url" name="imgUrl">
+                  <label for="imgUrl" class="active">Image Link</label>
                 </div>
               </div>
               <div class="row">

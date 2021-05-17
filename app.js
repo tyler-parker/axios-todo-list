@@ -1,14 +1,29 @@
-// const axios = require("axios")
-
 axios.get('https://api.vschool.io/tyler-parker/todo')
     .then(response => {
-      addListItem(response.data)
+      getListItem(response.data)
       console.log(response.data);
   }).catch(error => {
       console.log(error)
   });
 
-function addListItem(items) {
+const todoForm = document.todoForm
+
+todoForm.addEventListener("submit", function (event) {
+  event.preventDefault()
+
+  const item =  {
+    title: todoForm.title.value,
+    description: todoForm.description.value,
+    imgUrl: todoForm.imgUrl.value
+  }
+  console.log(todoForm.title.value);
+    
+   axios.post('https://api.vschool.io/tyler-parker/todo', item)
+        .then(response => console.log(response.data))
+        .catch(error => console.log(error))
+})
+
+function getListItem(items) {
   items.forEach(data => {
     const newItem = document.createElement('li')
     const title = document.createElement('h5')
@@ -39,15 +54,15 @@ function addListItem(items) {
   });
 }
 
-const checkBox = document.getElementsByClassName("filled-in")
-checkBox.addEventListener("change", (e) => {
-  if (checkBox.checked) {
-  axios.put("https://api.vschool.io/tyler-parker/todo" + data._id, {completed: true})
-    .then(response => console.log(response))
-    .catch(error => console.log(error))
-  } else {
-  axios.put("https://api.vschool.io/tyler-parker/todo" + data._id, {completed: false})
-    .then(response => console.log(response))
-    .catch(error => console.log(error))
-}
-})
+// const checkBox = document.getElementsByClassName("filled-in")
+// checkBox.addEventListener("change", (e) => {
+//   if (checkBox.checked === false) {
+//   axios.put("https://api.vschool.io/tyler-parker/todo" + data._id, {completed: false})
+//     .then(response => console.log(response))
+//     .catch(error => console.log(error))
+//   } else {
+//   axios.put("https://api.vschool.io/tyler-parker/todo" + data._id, {completed: true})
+//     .then(response => console.log(response))
+//     .catch(error => console.log(error))
+// }
+// })
