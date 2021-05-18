@@ -1,4 +1,4 @@
-
+// Requesting data from the server and passing it to getListItem function
 axios.get('https://api.vschool.io/tyler-parker/todo')
     .then(response => {
       getListItem(response.data)
@@ -8,9 +8,9 @@ axios.get('https://api.vschool.io/tyler-parker/todo')
   });
 
 const toDoForm = document.toDoForm
-
-toDoForm.addEventListener("submit", function (event) {
-  event.preventDefault()
+// Creating a new list item to the API from the form
+toDoForm.addEventListener("submit", e => {
+  e.preventDefault()
   const item =  {
     title: toDoForm.title.value,
     description: toDoForm.description.value,
@@ -22,9 +22,10 @@ toDoForm.addEventListener("submit", function (event) {
     .then(response => console.log(response.data))
     .catch(error => console.log(error))
 })
-
+// function for receiving data from the API and creating elements to display data on the page
 function getListItem(items) {
   items.forEach(data => {
+    // creating the HTML elements
     const newItem = document.createElement('li')
     const title = document.createElement('h5')
     const description = document.createElement('p')
@@ -32,7 +33,7 @@ function getListItem(items) {
     const collection = document.getElementById("itemGroup")
     const checkBox = document.createElement('input')
     const deleteButton = document.createElement("button")
-
+    // setting attributes for HTML elements
     title.textContent = data.title
     description.textContent = data.description
     img.src = data.imgUrl
@@ -42,12 +43,12 @@ function getListItem(items) {
     checkBox.setAttribute("class", "filled-in")
     deleteButton.setAttribute("class", "btn red waves-effect waves-light right")
     deleteButton.insertAdjacentHTML("beforeend", "Delete")
-
-    collection.appendChild(newItem)
+    // placing the data elements in order within a list container
+    collection.append(newItem)
     newItem.append(title, description, img)
     title.append(checkBox, deleteButton)
     
-
+    // including a PUT event listener checkbox to toggle the completed status in the API
     checkBox.addEventListener("change", (e) => {
       if (checkBox.checked === false) {
         axios.put("https://api.vschool.io/tyler-parker/todo/" + data._id, {completed: false})
@@ -59,7 +60,7 @@ function getListItem(items) {
           .catch(error => console.log(error))
       }
     })
-
+    // including a DELETE event listener button to delete an item from the API
     deleteButton.addEventListener("click", e => {
       axios.delete("https://api.vschool.io/tyler-parker/todo/" + data._id)
         .then(response => console.log(response))
