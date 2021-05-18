@@ -16,14 +16,19 @@ toDoForm.addEventListener("submit", e => {
     description: toDoForm.description.value,
     imgUrl: toDoForm.imgUrl.value
   }
+  toDoForm.title.value = ""
+  toDoForm.description.value = ""
+  toDoForm.imgUrl.value = ""
   console.log(toDoForm.title.value);
     
   axios.post('https://api.vschool.io/tyler-parker/todo', item)
     .then(response => console.log(response.data))
+    .then(alert("Post successful"))
     .catch(error => console.log(error))
 })
 // function for receiving data from the API and creating elements to display data on the page
 function getListItem(items) {
+  document.getElementsByClassName("collection-item").innerHTML = ""
   items.forEach(data => {
     // creating the HTML elements
     const newItem = document.createElement('li')
@@ -64,6 +69,7 @@ function getListItem(items) {
     deleteButton.addEventListener("click", e => {
       axios.delete("https://api.vschool.io/tyler-parker/todo/" + data._id)
         .then(response => console.log(response))
+        .then(alert("Delete Successful"))
         .catch(error => console.log(error))
     })
   });
